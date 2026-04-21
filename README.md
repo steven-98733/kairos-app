@@ -56,3 +56,40 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Deploy on Vercel
+
+This repository now includes the base files needed for a Vercel deployment:
+
+- `api/index.php` as the PHP serverless entrypoint
+- `vercel.json` for the runtime, rewrites, and Vercel-safe Laravel defaults
+- `.vercelignore` to avoid uploading local-only folders like `vendor/` and `node_modules/`
+
+### What is already configured
+
+- Requests are routed to Laravel through `api/index.php`
+- Static assets from `public/` are exposed for `/images`, `/build`, `favicon.ico`, and `robots.txt`
+- Logs are sent to `stderr`
+- Sessions use cookies instead of the database
+- Cache uses the in-memory `array` store
+- Queue jobs run with the `sync` driver
+- Blade compiled views and Laravel cache files are redirected to `/tmp`, which is writable on Vercel
+
+### What you still need to set in Vercel
+
+Set these environment variables in the Vercel dashboard before the first production deploy:
+
+- `APP_KEY`
+- `APP_URL`
+- `DB_CONNECTION`
+- `DB_URL` or the matching `DB_HOST` / `DB_PORT` / `DB_DATABASE` / `DB_USERNAME` / `DB_PASSWORD`
+
+### Important production note
+
+Do not use the local SQLite file on Vercel for production data. Vercel functions run on a read-only filesystem except for `/tmp`, so this project needs an external database such as PostgreSQL or MySQL in production.
+
+After the database is connected, run the migrations against the production database:
+
+```bash
+php artisan migrate --force
+```
