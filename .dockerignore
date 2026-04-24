@@ -1,0 +1,13 @@
+.env
+.env.*
+.git
+.gitignore
+node_modules
+vendor
+tests
+storage/framework/cache
+storage/framework/sessions
+storage/framework/views
+storage/logs
+.phpunit.result.cache
+database/database.sqlite
