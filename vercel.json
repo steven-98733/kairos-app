@@ -1,16 +1,7 @@
 {
     "$schema": "https://openapi.vercel.sh/vercel.json",
-    "version": 3,
     "framework": null,
-    "builds": [
-        {
-            "src": "package.json",
-            "use": "@vercel/static-build",
-            "config": {
-                "distDir": "public"
-            }
-        }
-    ],
+    "buildCommand": "npm run build",
     "functions": {
         "api/index.php": {
             "runtime": "vercel-php@0.8.0"
